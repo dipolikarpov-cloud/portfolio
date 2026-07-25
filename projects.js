@@ -68,7 +68,7 @@ function renderPlate(project, index) {
   const num = String(index + 1).padStart(2, "0");
   const motifSvg = project.motif ? MOTIFS[project.motif] || "" : "";
   return `
-    <a class="plate reveal" href="${project.href}">
+    <a class="plate" href="${project.href}">
       <span class="plate-number">${num}</span>
       <span class="plate-motif">${motifSvg}</span>
       <span class="plate-title">${project.title}</span>
@@ -78,7 +78,7 @@ function renderPlate(project, index) {
 function renderPlaceholder(index) {
   const num = String(index + 1).padStart(2, "0");
   return `
-    <div class="plate is-placeholder reveal">
+    <div class="plate is-placeholder">
       <span class="plate-number">${num}</span>
       <p class="placeholder-text">Следующий проект появится здесь.</p>
     </div>`;
@@ -90,5 +90,3 @@ function renderPortfolio() {
 }
 
 renderPortfolio();
-/* reveal.js (подключен отдельным тегом ниже) находит .reveal-элементы,
-   включая только что отрисованные карточки, и включает их появление */
