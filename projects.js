@@ -1,54 +1,19 @@
 /* =========================================================================
    ДОБАВЛЕНИЕ НОВОГО ПРОЕКТА:
-   допиши один объект в конец массива PROJECTS ниже. Оглавление, нумерация,
-   строка статистики и карточка-заглушка в конце пересчитаются сами —
-   остальной файл трогать не нужно.
+   допиши один объект в конец массива PROJECTS ниже — карточка и её место
+   в очереди (нумерация, заглушка "следующий проект") пересчитаются сами.
 
    Поля:
-     title    — название проекта
-     question — один короткий вопрос, на который отвечает анализ
-     status   — 'done' | 'progress' | 'planned'
-     note     — (необязательно) короткое пояснение статуса/ограничений
-     tools    — массив строк с ключевыми инструментами
-     motif    — 'network' | 'hexgrid' | 'points' | null (иконка-мотив слева)
-     links    — { repo, maps, report } — любое поле можно не указывать
-                (тогда вместо ссылки покажется "скоро")
+     title — название проекта (то, что видно на карточке)
+     href  — ссылка на страницу проекта (projects/имя-файла.html)
+     motif — 'network' | 'hexgrid' | 'points' | null (иконка-мотив на карточке)
    ========================================================================= */
 
 const PROJECTS = [
   {
     title: "Доступность детских садов",
-    question: "Хватает ли жителям спальных районов Москвы садиков в пешей доступности?",
-    status: "progress",
-    note: "10-шаговая официальная методика обеспеченности. Бирюлёво Западное, Ново-Переделкино, Южное Медведково — данные и карты по всем трём готовы, финальная вёрстка отчётов в InDesign впереди.",
-    tools: ["OSMnx", "NetworkX", "GeoPandas", "QGIS", "scipy"],
+    href: "projects/kindergarten.html",
     motif: "network",
-    links: {
-      // repo: "https://github.com/...",
-      // maps: "https://...github.io/...",
-      // report: "https://.../report.pdf",
-    },
-  },
-  {
-    title: "Городской остров тепла — Нижний Новгород",
-    question: "Как рельеф, застройка и река формируют перегрев города — и меняется ли эта картина зимой?",
-    status: "done",
-    note: "Landsat + NDVI/NDBI/LST, гексагональная сетка, OLS-регрессия отдельно для лета (R²=0.89) и зимы (R²=0.45). Эффект высоты меняет знак сезонно — вероятная температурная инверсия.",
-    tools: ["Landsat / STAC", "rasterio", "Copernicus DEM", "scikit-learn", "QGIS"],
-    motif: "hexgrid",
-    links: {
-      // repo: "https://github.com/...",
-      // report: "https://.../report.pdf",
-    },
-  },
-  {
-    title: "Ретейл-аналитика продуктовых сетей — Москва",
-    question: "Где сети конкурируют друг с другом, а где остаются зоны для экспансии?",
-    status: "progress",
-    note: "Чистый SQL поверх PostGIS — намеренный выбор в пользу компетенции, которую не заменить geopandas. Диагностика качества OSM-данных завершена, сам пайплайн ещё не запущен.",
-    tools: ["PostGIS", "SQL", "OSM / osmnx"],
-    motif: "points",
-    links: {},
   },
 ];
 
@@ -92,119 +57,33 @@ const MOTIFS = {
     </svg>`,
 };
 
-const STATUS_LABEL = {
-  done: "Завершён",
-  progress: "В работе",
-  planned: "Скоро",
-};
-
-/* ============================ Вспомогательное ============================ */
-
-function plateId(index) {
-  return `plate-${String(index + 1).padStart(2, "0")}`;
-}
-
-function renderLinks(links = {}) {
-  const items = [
-    ["repo", "Код"],
-    ["maps", "Карты"],
-    ["report", "Отчёт"],
-  ];
-  return items
-    .map(([key, label]) =>
-      links[key]
-        ? `<a href="${links[key]}" target="_blank" rel="noopener">${label} →</a>`
-        : `<span class="soon">${label} — скоро</span>`
-    )
-    .join("");
-}
-
-/* ============================== Оглавление ============================== */
-
-function renderTocRow(project, index) {
-  const num = String(index + 1).padStart(2, "0");
-  return `
-    <li class="toc-row">
-      <a href="#${plateId(index)}">
-        <span class="toc-num">${num}</span>
-        <span class="toc-title">${project.title}</span>
-        <span class="toc-leader" aria-hidden="true"></span>
-        <span class="toc-status">${STATUS_LABEL[project.status] || project.status}</span>
-      </a>
-    </li>`;
-}
-
 /* ============================ Карточки-«листы» ============================ */
 
 function renderPlate(project, index) {
   const num = String(index + 1).padStart(2, "0");
   const motifSvg = project.motif ? MOTIFS[project.motif] || "" : "";
   return `
-    <article class="plate reveal" id="${plateId(index)}">
-      <div class="plate-number">${num}</div>
-      <div class="plate-motif">${motifSvg}</div>
-      <div class="plate-body">
-        <div class="plate-head">
-          <h3 class="plate-title">${project.title}</h3>
-          <span class="status ${project.status}">${STATUS_LABEL[project.status] || project.status}</span>
-        </div>
-        <p class="plate-question">${project.question}</p>
-        ${project.note ? `<p class="plate-note">${project.note}</p>` : ""}
-        <ul class="tools">
-          ${(project.tools || []).map((t) => `<li>${t}</li>`).join("")}
-        </ul>
-        <div class="plate-links">${renderLinks(project.links)}</div>
-      </div>
-    </article>`;
+    <a class="plate reveal" href="${project.href}">
+      <span class="plate-number">${num}</span>
+      <span class="plate-motif">${motifSvg}</span>
+      <span class="plate-title">${project.title}</span>
+    </a>`;
 }
 
 function renderPlaceholder(index) {
   const num = String(index + 1).padStart(2, "0");
   return `
-    <article class="plate is-placeholder reveal">
-      <div class="plate-number">${num}</div>
+    <div class="plate is-placeholder reveal">
+      <span class="plate-number">${num}</span>
       <p class="placeholder-text">Следующий проект появится здесь.</p>
-    </article>`;
+    </div>`;
 }
-
-/* ============================== Сборка страницы ============================== */
 
 function renderPortfolio() {
-  document.getElementById("toc-list").innerHTML = PROJECTS.map(renderTocRow).join("");
-
   document.getElementById("plates").innerHTML =
     PROJECTS.map(renderPlate).join("") + renderPlaceholder(PROJECTS.length);
-
-  const done = PROJECTS.filter((p) => p.status === "done").length;
-  document.getElementById("meta-stats").textContent =
-    `Готово ${done} из ${PROJECTS.length} проектов`;
-}
-
-/* ===== Мягкое появление секций при прокрутке (отключается при reduced motion) ===== */
-
-function initReveal() {
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const items = document.querySelectorAll(".reveal");
-
-  if (prefersReduced || !("IntersectionObserver" in window)) {
-    items.forEach((el) => el.classList.add("is-visible"));
-    return;
-  }
-
-  const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          io.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
-  );
-
-  items.forEach((el) => io.observe(el));
 }
 
 renderPortfolio();
-initReveal();
+/* reveal.js (подключён отдельным тегом ниже) находит .reveal-элементы,
+   включая только что отрисованные карточки, и включает их появление */
