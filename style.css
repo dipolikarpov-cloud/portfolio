@@ -1,6 +1,6 @@
 /* =========================================================================
-   ДИЗАЙН-СИСТЕМА — общая для главной страницы и страниц отдельных проектов.
-   Согласована с картографическими отчётами: якорный тёмный цвет, дивергентная
+   ДИЗАЙН-СИСТЕМА - общая для главной страницы и страниц отдельных проектов.
+   Согласована с картографическими отчетами: якорный темный цвет, дивергентная
    шкала, PT Serif/PT Sans.
    ========================================================================= */
 
@@ -56,14 +56,22 @@ a:focus-visible, button:focus-visible {
   outline-offset: 3px;
 }
 
-.reveal {
+/* Контент по умолчанию виден ВСЕГДА - это не зависит от JS.
+   Класс reveal-pending добавляется самим JS непосредственно перед началом
+   наблюдения, поэтому если скрипт не выполнится - ничего не пострадает. */
+.reveal-pending {
   opacity: 0;
   transform: translateY(14px);
+}
+.reveal {
   transition: opacity 520ms ease, transform 520ms ease;
 }
-.reveal.is-visible { opacity: 1; transform: translateY(0); }
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; }
+  .reveal-pending { opacity: 1; transform: none; }
 }
 
 /* ===== Hero ===== */
