@@ -12,7 +12,7 @@
 const PROJECTS = [
   {
     title: "Доступность детских садов",
-    href: "projects/kindergarten.html",
+    href: "kindergarten.html",
     motif: "network",
   },
 ];
