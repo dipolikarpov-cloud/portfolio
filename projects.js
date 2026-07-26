@@ -80,18 +80,8 @@ function renderPlate(project, index) {
     </a>`;
 }
 
-function renderPlaceholder(index) {
-  const num = String(index + 1).padStart(2, "0");
-  return `
-    <div class="plate is-placeholder">
-      <span class="plate-number">${num}</span>
-      <p class="placeholder-text">Следующий проект появится здесь.</p>
-    </div>`;
-}
-
 function renderPortfolio() {
-  document.getElementById("plates").innerHTML =
-    PROJECTS.map(renderPlate).join("") + renderPlaceholder(PROJECTS.length);
+  document.getElementById("plates").innerHTML = PROJECTS.map(renderPlate).join("");
 }
 
 renderPortfolio();

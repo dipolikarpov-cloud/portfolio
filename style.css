@@ -171,14 +171,6 @@ a.plate:hover, a.plate:focus-visible {
 }
 a.plate:hover::before, a.plate:focus-visible::before { transform: scaleY(1); }
 
-.plate.is-placeholder {
-  background: transparent;
-  border: 1px dashed var(--rule-strong);
-  opacity: 0.7;
-  pointer-events: none;
-}
-.plate.is-placeholder::before { display: none; }
-
 .plate-number {
   font-family: var(--serif);
   font-size: 14px;
@@ -204,15 +196,6 @@ a.plate:hover::before, a.plate:focus-visible::before { transform: scaleY(1); }
   margin: 0;
 }
 
-.placeholder-text {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 15px;
-  color: var(--muted);
-  grid-column: 2 / 4;
-  margin: 0;
-}
-
 /* ===== Футер ===== */
 .site-footer {
   border-top: 1px solid var(--rule-strong);
@@ -222,7 +205,7 @@ a.plate:hover::before, a.plate:focus-visible::before { transform: scaleY(1); }
   max-width: var(--container);
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: baseline;
   gap: 16px;
   flex-wrap: wrap;
@@ -396,6 +379,5 @@ a.plate:hover::before, a.plate:focus-visible::before { transform: scaleY(1); }
   a.plate { grid-template-columns: 36px 1fr; padding: 22px 20px 22px 0; }
   .plate-motif { display: none; }
   .plate-number { padding-left: 14px; font-size: 12.5px; }
-  .placeholder-text { grid-column: 2; }
   .site-footer .footer-inner { flex-direction: column; align-items: flex-start; }
 }
