@@ -365,6 +365,12 @@ a.plate:hover::before, a.plate:focus-visible::before { transform: scaleY(1); }
   height: auto;
   border: 1px solid var(--rule);
 }
+.gallery iframe {
+  display: block;
+  width: 100%;
+  height: 600px;
+  border: 1px solid var(--rule);
+}
 .gallery figcaption {
   font-family: var(--serif);
   font-style: italic;

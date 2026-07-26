@@ -20,6 +20,11 @@ const PROJECTS = [
     href: "uhi.html",
     motif: "hexgrid",
   },
+  {
+    title: "Ретейл-аналитика продуктовых сетей - Москва",
+    href: "retail.html",
+    motif: "points",
+  },
 ];
 
 /* ========================= Иконки-мотивы (SVG) ========================= */
