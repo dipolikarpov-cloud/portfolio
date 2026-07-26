@@ -83,33 +83,13 @@
                     </style>
             
 <style>.leaflet-attribution-flag { display: none !important; }</style>
+<style>.leaflet-control-attribution { display: none !important; }</style>
 </head>
 <body>
     
     
             <div class="folium-map" id="map_59921914de0664c662f807a1fb416c73" ></div>
         
-
-<script>
-(function() {
-  function clean() {
-    var els = document.querySelectorAll(".leaflet-control-attribution");
-    var found = false;
-    els.forEach(function(el) {
-      if (el.innerHTML.indexOf("leafletjs.com") !== -1 || el.querySelector(".leaflet-attribution-flag")) {
-        el.innerHTML = "CartoDB";
-        found = true;
-      }
-    });
-    return found;
-  }
-  if (!clean()) {
-    var obs = new MutationObserver(function() { if (clean()) obs.disconnect(); });
-    obs.observe(document.body, {childList: true, subtree: true});
-    setTimeout(function(){ obs.disconnect(); }, 8000);
-  }
-})();
-</script>
 </body>
 <script>
     
