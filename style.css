@@ -146,11 +146,11 @@ main {
   gap: 10px 32px;
 }
 .skills-list li {
-  font-size: 14.5px;
+  font-size: 16.5px;
   color: var(--muted);
-  padding-left: 16px;
+  padding-left: 18px;
   position: relative;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 .skills-list li::before {
   content: "-";
