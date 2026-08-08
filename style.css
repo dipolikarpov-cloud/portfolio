@@ -339,6 +339,27 @@ a.plate:hover::before, a.plate:focus-visible::before { transform: scaleY(1); }
   max-width: 68ch;
 }
 
+.simple-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: 68ch;
+}
+.simple-list li {
+  position: relative;
+  padding: 9px 0 9px 18px;
+  font-size: 15.5px;
+  border-top: 1px solid var(--rule);
+}
+.simple-list li:first-child { border-top: none; padding-top: 0; }
+.simple-list li::before {
+  content: "-";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  color: var(--accent);
+}
+
 .gallery {
   display: flex;
   flex-direction: column;
